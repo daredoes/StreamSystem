@@ -1,0 +1,127 @@
+{% extends "base-admin.html" %}
+{% block title %}Job Form{% endblock %}
+{% block content %}
+
+{% include "jobs/job_menu.html" %}
+
+<script type="text/javascript">
+<!--
+    function blank() {
+        var defaults = {
+            name: "",
+            description: "",
+            duration: 1,
+            slots: 1,
+            weight: 1.0
+        };
+        $.each(defaults, function(name,value){
+            $("[name=" + name + "]").val(value);
+        });
+        $("[name=restricted],[name=extra15]").attr("checked", false);
+    }
+// -->
+</script>
+
+{% if defaults %}
+    <i>Note: To help you enter the same job at multiple times, this form has been filled in
+        using the values of the last shift you created in this location. <br/>
+        <a href="#" onClick="blank(); return false;">Click here</a> to undo these defaults and start
+        with a blank form.</i>
+{% endif %}
+
+<form method="post" action="form">
+<input type="hidden" name="id" value="{{ job.db_id }}" />
+<input type="hidden" name="type" value="{{ job.type }}" />
+<input type="hidden" name="from_schedule" value="{{ from_schedule }}" />
+{% csrf_token %}
+
+<table>
+<tr>
+    <td width="25%"> <b>Job Name:</b> </td>
+    <td width="75%"> <input class="focus" type="text" name="name" value="{{ job.name }}" /> </td>
+</tr>
+<tr>
+    <td> Description <i>(Optional)</i>: </td>
+    <td> <input type="text" name="description" value="{{ job.description }}" /> </td>
+</tr>
+<tr>
+    <td> <b>Start Time:</b> </td>
+    <td>
+        <select name="start_time">
+            {% if job.type == c.SETUP %}
+                {% options c.SETUP_TIME_OPTS job.start_time %}
+            {% elif job.type == c.TEARDOWN %}
+                {% options c.TEARDOWN_TIME_OPTS job.start_time %}
+            {% else %}
+                {% options c.START_TIME_OPTS job.start_time %}
+            {% endif %}
+        </select>
+    </td>
+</tr>
+<tr>
+    <td><b>{% if job.type != c.REGULAR %}Expected Approximate {% endif %}Duration:</b></td>
+    <td>
+        <select name="duration">
+            {% options c.DURATION_OPTS job.duration %}
+        </select>
+    </td>
+</tr>
+{% if job.type == c.REGULAR %}
+    <tr>
+        <td> <b>Extra 15{% popup_link "../static_views/extra15.html" %}</b> </td>
+        <td> {% checkbox job.extra15 %} Yes </td>
+    </tr>
+{% endif %}
+<tr>
+    <td> <b>Slots:</b> </td>
+    <td>
+        <select name="slots">
+            {% int_options 1 50 job.slots %}
+        </select>
+        {% if not job.is_new %}({{ job.shifts|length }} filled){% endif %}
+    </td>
+</tr>
+<tr>
+    <td> <b>Location:</b> </td>
+    <td>
+        <select name="location">
+            {% options c.JOB_LOCATION_OPTS job.location %}
+        </select>
+    </td>
+</tr>
+{% if job.type == c.REGULAR %}
+    <tr>
+        <td> <b>Weight:{% popup_link "../static_views/weightDesc.html" %}</b> </td>
+        <td>
+            <select name="weight">
+                {% options c.WEIGHT_OPTS job.weight %}
+            </select>
+        </td>
+    </tr>
+{% endif %}
+<tr>
+    <td> <b>Restricted:{% popup_link "../static_views/trustDesc.html" %}</b> </td>
+    <td> {% checkbox job.restricted %} Yes </td>
+</tr>
+<tr>
+    <td></td>
+    <td> <input type="submit" value="Upload" />
+</tr>
+</table>
+
+</form>
+
+{% if not job.is_new %}
+    <form method="post" action="delete">
+    {% csrf_token %}
+    <input type="hidden" name="id" value="{{ job.id }}" />
+    <table width="100%" cellspacing="5" cellpadding="5">
+    <tr>
+        <td width="25%"></td>
+        <td width="75%"> <input type="submit" value="Delete" /> </td>
+    </tr>
+    </table>
+    </form>
+{% endif %}
+
+{% endblock %}

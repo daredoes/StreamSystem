@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>All Open Shifts</title>
+    <link rel="stylesheet" type="text/css" href="../static/styles/styles.css" />    
+    <script type="text/javascript" src="../static/deps/combined.js"></script>
+    <script type="text/javascript" src="../static_views/ratings.js"></script>
+</head>
+<body>
+
+<h2> All Jobs With Unfilled Shifts </h2>
+
+<div style="text-align:center">
+    {% if show_restricted %}
+        <a href="everywhere">Show Only Unrestricted Shifts</a>
+    {% else %}
+        <a href="everywhere?show_restricted=true">Show Regular and Restricted Shifts</a>
+    {% endif %}
+</div>
+
+<script>SHOW_FULL_JOBS = false;</script>
+{% include "jobs/job_renderer.html" %}
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+{% extends "base-admin.html" %}
+{% block title %}Attendee Comments{% endblock %}}
+{% block content %}
+
+<table class="list">
+<tr class="header">
+    <td><a href="comments?order={{ order.last_name }}">Name</a></td>
+    <td><a href="comments?order={{ order.registered }}">Registered</a></td>
+    <td>Comments</td>
+</tr>
+{% for attendee in attendees %}
+    <tr>
+        <td><nobr><a href="form?id={{ attendee.id }}">{{ attendee.last_first }}</a></nobr></td>
+        <td><nobr>{{ attendee.registered }}</nobr></td>
+        <td>{{ attendee.comments }}</td>
+    </tr>
+{% endfor %}
+</table>
+
+{% endblock %}

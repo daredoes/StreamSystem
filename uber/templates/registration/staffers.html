@@ -1,0 +1,55 @@
+{% extends "base-admin.html" %}
+{% block title %}Staffing Admin{% endblock %}
+{% block content %}
+<ol class="breadcrumb">
+  <li><a href="../accounts/homepage">Home</a></li>
+  <li>People</li>
+  <li class="active">Staffers</li>
+</ol>
+
+<div class="row">
+    <div class="col-md-2">{{ staffers|length }} volunteers</div>
+    <div class="col-md-2">{{ taken_hours }} shift hours taken</div>
+    <div class="col-md-2">{{ total_hours }} shift hours exist</div>
+</div>
+
+<table class="table table-striped datatable">
+<thead><tr>
+    <th>Name</th>
+    <th>Badge</th>
+    <th>Paid</th>
+    <th><nobr>Assigned To</nobr></th>
+    <th>Hours</th>
+    {% if c.AT_OR_POST_CON %}
+        <th>Worked</th>
+    {% endif %}
+    {% if c.AT_THE_CON %}
+        <th><nobr>Checked In</nobr></th>
+    {% endif %}
+</tr></thead>
+{% for attendee in staffers %}
+    <tr>
+        <td data-order="{{ attendee.full_name }}" data-search="{{ attendee.full_name }}" style="text-align:left"> <a href="form?id={{ attendee.id }}">{{ attendee.full_name }}</a> </td>
+        <td>{{ attendee.badge }}</td>
+        <td>{{ attendee.paid_label }}</td>
+        <td style="text-align:left">
+            <ul>
+                {% for dept in attendee.assigned_depts_labels %}
+                    <li>{{ dept }}</li>
+                {% empty %}
+                    <span style="color:red">No assignments</span>
+                {% endfor %}
+            </ul>
+        </td>
+        <td data-order="{{ attendee.weighted_hours }}" data-search="{{ attendee.weighted_hours }}"> <a href="shifts?id={{ attendee.id }}">{{ attendee.weighted_hours }}</a> </td>
+        {% if c.AT_OR_POST_CON %}
+            <td data-order="{{ attendee.worked_hours }}" data-search="{{ attendee.worked_hours }}"> <a href="shifts?id={{ attendee.id }}">{{ attendee.worked_hours }}</a> </td>
+        {% endif %}
+        {% if c.AT_THE_CON %}
+            <td>{{ attendee.checked_in|yesno:"Checked In,Not Checked In" }}</td>
+        {% endif %}
+    </tr>
+{% endfor %}
+</table>
+
+{% endblock %}

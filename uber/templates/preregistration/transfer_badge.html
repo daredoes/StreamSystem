@@ -1,0 +1,33 @@
+{% extends "./preregistration/preregbase.html" %}
+{% block backlink %}{% endblock %}
+{% block title %}Transfer Your {{ c.EVENT_NAME }} Registration{% endblock %}
+{% block content %}
+
+<div class="masthead"></div>
+<div class="panel panel-default">
+<h2> Transfer {{ old.full_name }}'s Registration </h2>
+
+By filling out this form, you will be transferring {{ old.full_name }}'s {{ c.EVENT_NAME }} registration
+to someone else.  {{ old.full_name }} will no longer have a paid {{ c.EVENT_NAME }} badge waiting at
+our Registration Desk; that will belong to whomever the badge is transferred.
+
+<form method="POST" action="transfer_badge" class="form-horizontal">
+{% csrf_token %}
+<input type="hidden" name="id" value="{{ attendee.id }}" />
+
+<div class="form-group" id="badge-types">
+    <label class="col-sm-2 control-label">Badge Level</label>
+</div>
+
+{% include "regform.html" %}
+
+<div class="form-group">
+    <div class="col-sm-6 col-sm-offset-2">
+        <button type="submit" class="btn btn-primary" id="updateButton">Transfer This Badge</button>
+    </div>
+</div>
+
+</form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,145 @@
+
+a, a:visited {
+    color:           blue;
+    text-decoration: none;
+}
+a:hover {
+    color:           red;
+    text-decoration: underline;
+}
+
+a.withtooltip, a.withtooltip:hover {
+    color:           black;
+    font-style:      italic;
+    text-decoration: none;
+}
+
+a.closer {
+    border: 2px solid black;
+    padding-left: 4px;
+    padding-right: 4px;
+    text-decoration: none;
+    font-family: Arial,Helvetica,sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+h2 {
+    text-align: center;
+}
+
+ul {
+    margin: 0px;
+}
+
+table {
+    width:          100%;
+    border-spacing: 5px;
+}
+td {
+    padding: 5px;
+}
+
+table.calendar {
+    width:          auto;
+    border:         2px solid black;
+    text-align:     center;
+    border-spacing: 5px;
+}
+table.calendar td {
+    border:  1px solid black;
+    padding: 15px;
+}
+
+table.menu {
+    border-collapse: collapse;
+    text-align:      center;
+    margin-top:      10px;
+    margin-bottom:   10px;
+}
+table.menu td {
+    border: 2px solid gray;
+}
+
+table.list {
+    width:           100%;
+    text-align:      center;
+    border-collapse: collapse;
+}
+table.list td {
+    border:  1px solid black;
+    padding: 5px;
+}
+table.list tr.header {
+    background:     #99CCFF;
+    font-weight:    bold;
+    vertical-align: bottom;
+}
+table.list tr.header a,
+table.list tr.header a:hover,
+table.list tr.header a:visited {
+    color:           black;
+    text-decoration: none;
+}
+table.list table td {
+    border:  0;
+    padding: 0;
+}
+
+table.form {
+    border-spacing: 5px;
+}
+table.form td:first-of-type {
+    width: 1px;
+    white-space: nowrap;
+}
+table.form td:last-of-type {
+    width: auto;
+    padding-left: 15px;
+    white-space: normal;
+}
+table.form tr.dealer td {
+    white-space: normal;
+    vertical-align: top;
+}
+
+span.popup {
+    font-size: 10px;
+}
+
+.rating img {
+    margin-left: 25px;
+    cursor: pointer;
+}
+
+.charge {
+    width: auto;
+    border-spacing: 2px;
+    border: 1px solid black;
+    margin-left: auto;
+    margin-right: auto;
+}
+.charge thead {
+    font-weight: bold;
+    text-align: center;
+}
+.charge td {
+    padding: 10px;
+    border: 1px solid black;
+}
+
+ul.select2-results {
+    max-height: 300px;
+}
+.select2-bolded {
+    font-weight: bold;
+    font-size: 16pt;
+}
+
+.pad-top-10 li {
+    padding-top: 10px;
+}
+
+.center {
+    text-align: center;
+}
